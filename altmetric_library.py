@@ -429,9 +429,13 @@ class Article():
         return self._altmetric_images
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": #for mini tests
+    api_key = ''
+    with open("altmetric_api_key.txt", "r") as f:
+        api_key = f.read()
 
-    #arxiv = Article.from_arxiv("1108.2455")
-    #altmetric = Article.from_altmetric("241939")
-    #pmid = Article.from_pmid("21148220")
-    #ads = Article.from_ads("2012apphl.100y3104b")
+    metric_object = Altmetric(api_key)
+    arxiv = metric_object.from_arxiv("1108.2455")
+    
+    print arxiv
+
