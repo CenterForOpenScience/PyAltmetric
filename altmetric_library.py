@@ -6,6 +6,9 @@ or Altmetric ID. Users should avoid Altmetric ID's because
 they are subject to change. 
 """
 
+#raise exceptions
+#fix timeframe to have everything
+
 import requests
 import datetime
 import warnings
@@ -23,12 +26,12 @@ class AltmetricParseException(AltmetricException):
 class AltmetricHTTPException(AltmetricException):
     """A query argument or setting was formatted incorrectly."""
     def __init__(self, status_code):
-        print status_code
         response_codes = {403:"You are not authorized for this call.",
                           420:"Rate Limit Reached",
-                          502:"API is down."}
+                          502:"API is down.",
+                          400:"Bad Request."}
         self.status_code = status_code
-        self.msg = response_codes[status_code]
+        self.msg = response_codes[status_code] #if none default to http error codes
 
 
 class Altmetric():
@@ -42,45 +45,68 @@ class Altmetric():
 
         self._api_url = "http://api.altmetric.com/%s/" % self.api_version
 
-        self._params = {}
+        self._api_key = {}
         if self._api_key:
-            self._params = {'key': api_key}
+            self._api_key = {'key': api_key}
+
+    def _get_altmetrics(self, method, *args, **kwargs):
+        request_url = self.api_url + method + "/" + "/".join([a for a in args])
+        params = kwargs or {}
+        params.update(self.api_key)
+        response = requests.get(request_url, params = params)
+        if response.status_code == 200:
+            try:
+                return response.json()
+            except ValueError as e:
+                raise ParseException(e.message)
+        elif response.status_code == 404:
+            return {}
+        else:
+            raise AltmetricHTTPException(response.status_code)
 
     #Make articles
     def article_from_doi(self, doi):
         """Create an Article object using DOI"""
-        return Article(self, doi, 'doi')
+        raw_json = self._get_altmetrics('doi', doi)
+        return Article(raw_json)
 
     def article_from_pmid(self, pmid):
         """Create an Article object using PMID"""
-        return Article(self, pmid, 'pmid')
+        raw_json = self._get_altmetrics('pmid', pmid)
+        return Article(raw_json)
     
     def article_from_altmetric(self, altmetric_id):
-        """Create an Article object using Altmetric ID"""
-        return Article(self. altmetric_id, 'id')
+        """Create an Article object using Altmetric ID."""
+        warnings.warn("Altmetric ID's are subject to change.")
+        raw_json = self._get_altmetrics('id', altmetric_id)
+        return Article(raw_json)
 
     def article_from_ads(self, ads_bibcode):
         """Create an Article object using ADS Bibcode"""
-        return Article(self, ads_bibcode, 'ads')
+        raw_json = self._get_altmetrics('ads', ads_bibcode)
+        return Article(raw_json)
     
     def article_from_arxiv(self, arxiv_id):
         """Create an Article object using arXiv ID"""
-        return Article(self, arxiv_id, 'arxiv')
+        raw_json = self._get_altmetrics('arxiv', arxiv_id)
+        return Article(raw_json)
 
-    def articles_from_timeframe(self, time_frame):
-        pass #remeber you may have to go through muliple pages
+    def articles_from_timeframe(self, timeframe, page=1, num_results=100):
+        #accepts both 1d and 1 day eventually
+        #remeber you may have to go through muliple pages
+        #do we care about total numbers? in that case need a shallow
+        #class for results that is mostly just a list of articles
+        
+        articles = []
 
-    def articles_from_cited_in(self, source_list):
-        pass
-
-    def articles_from_doi_prefix(self, doi_prefix):
-        pass
-
-    def articles_from_nlmids(self, nlmid_list):
-        pass
-
-    def articles_from_subject(self, NLM_subject):
-        pass
+        i = page_range[0]
+        while(1):
+            raw_json = self._get_altmetrics('citations', timeframe , page = i)
+            if not raw_json:
+                break
+            results = raw_json.get('results', {})
+            i = i + 1
+            yield [Article(x) for x in results if x]
 
     @property
     def api_version(self):
@@ -91,19 +117,19 @@ class Altmetric():
         return self._api_url
 
     @property
-    def key(self):
-        return self._params
+    def api_key(self):
+        return self._api_key
 
 
 class Article():
 
     
-    def __init__(self, altmetric, id_key, id_type="doi"):
+    def __init__(self, raw_json):
         """
         Create an article object. Get raw dictionary from
         Altmetrics JSON. Parse dictionary into attributes.
         """
-        self._raw  = self.get_altmetrics(altmetric,id_key,id_type)
+        self._raw  = raw_json
         if self._raw:
             self._parse_raw()
        
@@ -168,29 +194,9 @@ class Article():
         self._altmetric_details_url = self._raw.get('details_url',)
 
         self._altmetric_images = self._raw.get('images', {})
-    
-    def get_altmetrics(self, altmetric, id_key_, id_type_):
-        """Check server response. Return dictionary from JSON if possible."""
-        request_url = "{base_url}{id_type}/{id_key}".format\
-                (base_url = altmetric.api_url, id_type = id_type_, id_key = id_key_)
-        response = requests.get(request_url, params = altmetric.key)
-        if response.status_code == 200:
-            try:
-                return response.json()
-            except ValueError as e:
-                raise ParseException(e.message)
-        elif response.status_code == 404:
-            return {}
-        else:
-            raise AltmetricHTTPException(response.status_code)
-        
-    def _convert_to_utc(self,unix_time):
-        """Convert UNIX timestamp to UTC."""
-        if unix_time:
-            return datetime.datetime.fromtimestamp(unix_time).strftime('%Y-%m-%dT%H:%M:%Sz')
 
-    #Specific methods for reformatting dictionaries/lists that are difficult to read.
-        
+
+    #Specific methods for reformatting dictionaries/lists that are difficult to read.        
     def _parse_score_history(self, history):
         """Make the score_history dictionary a little more readable."""
         new_dictionary = {}
@@ -207,6 +213,10 @@ class Article():
                 new_dictionary[date] = history[item]
         return new_dictionary
 
+    def _convert_to_utc(self,unix_time):
+        """Convert UNIX timestamp to UTC."""
+        if isinstance(unix_time, float): #this line could cause us to lose data
+            return datetime.datetime.fromtimestamp(unix_time).strftime('%Y-%m-%dT%H:%M:%Sz')
 
     def _parse_publisher_subjects(self, subjects):
         """Turns the publisher_subjects list of dictionaries into a list of subjects."""
@@ -224,7 +234,10 @@ class Article():
             new_context['context age'] = context.get('similar_age_3m', {})
             new_context['journal'] = context.get('journal', {})
         return new_context
-        
+
+    def __repr__(self): #FIX unicode problems
+        return self.title[:12].encode('UTF-8')
+
     def __str__(self): #FIX unicode problems
         string = u""
         for item in self._raw:
@@ -451,7 +464,7 @@ if __name__ == "__main__": #for mini tests
     with open("altmetric_api_key.txt", "r") as f:
         api_key = f.read()
 
-    metric_object = Altmetric()
-    arxiv = metric_object.article_from_arxiv("1108.2455")
-    print arxiv
+    metric_object = Altmetric(api_key)
+    for i in metric_object.articles_from_timeframe("1d"):
+        print i
 
