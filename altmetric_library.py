@@ -23,11 +23,12 @@ class AltmetricParseException(AltmetricException):
 class AltmetricHTTPException(AltmetricException):
     """A query argument or setting was formatted incorrectly."""
     def __init__(self, status_code):
-            response_codes = {403:"You are not authorized for this call.",
+        print status_code
+        response_codes = {403:"You are not authorized for this call.",
                           420:"Rate Limit Reached",
                           502:"API is down."}
-            self.status_code = status_code
-            self.msg = response_codes[status_code]
+        self.status_code = status_code
+        self.msg = response_codes[status_code]
 
 
 class Altmetric():
@@ -39,31 +40,47 @@ class Altmetric():
             warnings.warn("This library has only been tested with API v1.\
                 If you try another version it will probably break.")
 
+        self._api_url = "http://api.altmetric.com/%s/" % self.api_version
+
+        self._params = {}
         if self._api_key:
             self._params = {'key': api_key}
 
-        self._api_url = "http://api.altmetric.com/%s/" % self.api_version
-
     #Make articles
-    def from_doi(self, doi):
+    def article_from_doi(self, doi):
         """Create an Article object using DOI"""
         return Article(self, doi, 'doi')
 
-    def from_pmid(self, pmid):
+    def article_from_pmid(self, pmid):
         """Create an Article object using PMID"""
         return Article(self, pmid, 'pmid')
     
-    def from_altmetric(self, altmetric_id):
+    def article_from_altmetric(self, altmetric_id):
         """Create an Article object using Altmetric ID"""
         return Article(self. altmetric_id, 'id')
 
-    def from_ads(self, ads_bibcode):
+    def article_from_ads(self, ads_bibcode):
         """Create an Article object using ADS Bibcode"""
         return Article(self, ads_bibcode, 'ads')
     
-    def from_arxiv(self, arxiv_id):
+    def article_from_arxiv(self, arxiv_id):
         """Create an Article object using arXiv ID"""
         return Article(self, arxiv_id, 'arxiv')
+
+    def articles_from_timeframe(self, time_frame):
+        pass #remeber you may have to go through muliple pages
+
+    def articles_from_cited_in(self, source_list):
+        pass
+
+    def articles_from_doi_prefix(self, doi_prefix):
+        pass
+
+    def articles_from_nlmids(self, nlmid_list):
+        pass
+
+    def articles_from_subject(self, NLM_subject):
+        pass
 
     @property
     def api_version(self):
@@ -86,7 +103,7 @@ class Article():
         Create an article object. Get raw dictionary from
         Altmetrics JSON. Parse dictionary into attributes.
         """
-        self._raw  = self.get_altmetrics(altmetric, id_key,id_type)
+        self._raw  = self.get_altmetrics(altmetric,id_key,id_type)
         if self._raw:
             self._parse_raw()
        
@@ -165,7 +182,7 @@ class Article():
         elif response.status_code == 404:
             return {}
         else:
-            raise AltmetricHTTPException(response_codes)
+            raise AltmetricHTTPException(response.status_code)
         
     def _convert_to_utc(self,unix_time):
         """Convert UNIX timestamp to UTC."""
@@ -434,8 +451,7 @@ if __name__ == "__main__": #for mini tests
     with open("altmetric_api_key.txt", "r") as f:
         api_key = f.read()
 
-    metric_object = Altmetric(api_key)
-    arxiv = metric_object.from_arxiv("1108.2455")
-    
+    metric_object = Altmetric()
+    arxiv = metric_object.article_from_arxiv("1108.2455")
     print arxiv
 
