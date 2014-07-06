@@ -76,20 +76,25 @@ class Altmetric():
         raw_json = self._get_altmetrics('arxiv', arxiv_id)
         return self._create_article(raw_json)
 
-    def articles_from_timeframe(self, timeframe, page=1, num_results=100):
-        #accepts both 1d and 1 day eventually
-        #remeber you may have to go through muliple pages
-        #do we care about total numbers? in that case need a shallow
-        #class for results that is mostly just a list of articles
+    def articles_from_timeframe(self, timeframe, page = 1,
+        num_results = 100, **kwargs):
 
-        i = 1
+        #accepts both 1d and 1 day eventually or should i not care?
+        #is it okay to have **kwargs when i already have some?
+        #should these be explicit? cited_in doi_prefix
+        #nlmid subject
+
+        i = page
+
         while(1):
-            raw_json = self._get_altmetrics('citations', timeframe , page = i)
+            raw_json = self._get_altmetrics('citations', timeframe, page = i, kwargs)
             if not raw_json:
                 break
             results = raw_json.get('results', {})
             i += 1
-            yield [Article(x) for x in results if x]
+            for result in results:
+                yield Article(result)
+            #yield [Article(x) for x in results if x]
 
     def _get_altmetrics(self, method, *args, **kwargs):
         request_url = self.api_url + method + "/" + "/".join([a for a in args])
