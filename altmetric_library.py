@@ -1,9 +1,8 @@
 """
 This is a python library for the altmetrics API.
-It allows a user to access information about a specific
-article by supplying DOI,  arXiv ID, PMID, ADS bibcode,
-or Altmetric ID. Users should avoid Altmetric ID's because
-they are subject to change. 
+
+Some pieces of this library were inspired by or derived from the altmetric api
+wrapper altmetric.py which is licensed under the MIT open source license.
 """
 
 #raise exceptions
@@ -13,26 +12,27 @@ import requests
 import datetime
 import warnings
 
-
 class AltmetricException(Exception):
     """Base class for any altmetric_library error."""
     pass
 
-class AltmetricParseException(AltmetricException):
-    """A query argument or setting was formatted incorrectly."""
-    def __init__(self):
-        self.msg = "Something was formatted incorrectly."
+class JSONParseException(AltmetricException):
+    """
+    Failed to turn HTTP Response into JSON. Site is probably in the wrong format.
+    """
+    pass
 
 class AltmetricHTTPException(AltmetricException):
     """A query argument or setting was formatted incorrectly."""
     def __init__(self, status_code):
-        response_codes = {403:"You are not authorized for this call.",
-                          420:"Rate Limit Reached",
-                          502:"API is down.",
-                          400:"Bad Request."}
-        self.status_code = status_code
-        self.msg = response_codes[status_code] #if none default to http error codes
-
+        response_codes = {
+            403:"You are not authorized for this call.",
+            420:"Rate Limit Reached",
+            502:"API is down.",
+        }
+        super(AltmetricHTTPException, self).__init__(
+            response_codes.get(status_code, status_code)
+        )
 
 class Altmetric():
     def __init__(self, api_key = None, api_version = 'v1'):
@@ -49,6 +49,48 @@ class Altmetric():
         if self._api_key:
             self._api_key = {'key': api_key}
 
+    #Make articles
+    def article_from_doi(self, doi):
+        """Create an Article object using DOI"""
+        raw_json = self._get_altmetrics('doi', doi)
+        return self._create_article(raw_json)
+
+    def article_from_pmid(self, pmid):
+        """Create an Article object using PMID"""
+        raw_json = self._get_altmetrics('pmid', pmid)
+        return self._create_article(raw_json)
+    
+    def article_from_altmetric(self, altmetric_id):
+        """Create an Article object using Altmetric ID."""
+        warnings.warn("Altmetric ID's are subject to change.")
+        raw_json = self._get_altmetrics('id', altmetric_id)
+        return self._create_article(raw_json)
+
+    def article_from_ads(self, ads_bibcode):
+        """Create an Article object using ADS Bibcode"""
+        raw_json = self._get_altmetrics('ads', ads_bibcode)
+        return self._create_article(raw_json)
+    
+    def article_from_arxiv(self, arxiv_id):
+        """Create an Article object using arXiv ID"""
+        raw_json = self._get_altmetrics('arxiv', arxiv_id)
+        return self._create_article(raw_json)
+
+    def articles_from_timeframe(self, timeframe, page=1, num_results=100):
+        #accepts both 1d and 1 day eventually
+        #remeber you may have to go through muliple pages
+        #do we care about total numbers? in that case need a shallow
+        #class for results that is mostly just a list of articles
+
+        i = 1
+        while(1):
+            raw_json = self._get_altmetrics('citations', timeframe , page = i)
+            if not raw_json:
+                break
+            results = raw_json.get('results', {})
+            i += 1
+            yield [Article(x) for x in results if x]
+
     def _get_altmetrics(self, method, *args, **kwargs):
         request_url = self.api_url + method + "/" + "/".join([a for a in args])
         params = kwargs or {}
@@ -58,55 +100,17 @@ class Altmetric():
             try:
                 return response.json()
             except ValueError as e:
-                raise ParseException(e.message)
-        elif response.status_code == 404:
-            return {}
+                raise JSONParseException(e.message)
+        elif response.status_code == 404 or 400:
+            return None
         else:
             raise AltmetricHTTPException(response.status_code)
 
-    #Make articles
-    def article_from_doi(self, doi):
-        """Create an Article object using DOI"""
-        raw_json = self._get_altmetrics('doi', doi)
-        return Article(raw_json)
-
-    def article_from_pmid(self, pmid):
-        """Create an Article object using PMID"""
-        raw_json = self._get_altmetrics('pmid', pmid)
-        return Article(raw_json)
-    
-    def article_from_altmetric(self, altmetric_id):
-        """Create an Article object using Altmetric ID."""
-        warnings.warn("Altmetric ID's are subject to change.")
-        raw_json = self._get_altmetrics('id', altmetric_id)
-        return Article(raw_json)
-
-    def article_from_ads(self, ads_bibcode):
-        """Create an Article object using ADS Bibcode"""
-        raw_json = self._get_altmetrics('ads', ads_bibcode)
-        return Article(raw_json)
-    
-    def article_from_arxiv(self, arxiv_id):
-        """Create an Article object using arXiv ID"""
-        raw_json = self._get_altmetrics('arxiv', arxiv_id)
-        return Article(raw_json)
-
-    def articles_from_timeframe(self, timeframe, page=1, num_results=100):
-        #accepts both 1d and 1 day eventually
-        #remeber you may have to go through muliple pages
-        #do we care about total numbers? in that case need a shallow
-        #class for results that is mostly just a list of articles
-        
-        articles = []
-
-        i = page_range[0]
-        while(1):
-            raw_json = self._get_altmetrics('citations', timeframe , page = i)
-            if not raw_json:
-                break
-            results = raw_json.get('results', {})
-            i = i + 1
-            yield [Article(x) for x in results if x]
+    def _create_article(self, json):
+        try:
+            return Article(json)
+        except AttributeError:
+            return None
 
     @property
     def api_version(self):
@@ -129,9 +133,11 @@ class Article():
         Create an article object. Get raw dictionary from
         Altmetrics JSON. Parse dictionary into attributes.
         """
-        self._raw  = raw_json
-        if self._raw:
+        if raw_json:
+            self._raw  = raw_json
             self._parse_raw()
+        else:
+            raise AttributeError
        
     def _parse_raw(self):
         """Extract all attributes from raw dictionary"""
@@ -376,7 +382,7 @@ class Article():
         return self._redit_mentions
     @property
     def cited_by_tweeters_count(self):
-        return scited_by_tweeters_count
+        return self.cited_by_tweeters_count
     
     @property
     def cited_by_google_plus_count(self):
@@ -460,11 +466,13 @@ class Article():
 
 
 if __name__ == "__main__": #for mini tests
+
     api_key = ''
     with open("altmetric_api_key.txt", "r") as f:
         api_key = f.read()
 
     metric_object = Altmetric(api_key)
-    for i in metric_object.articles_from_timeframe("1d"):
-        print i
+    articles = metric_object.articles_from_timeframe("1d")
+    for list_ in articles:
+     print list_
 
