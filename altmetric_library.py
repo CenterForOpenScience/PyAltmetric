@@ -394,10 +394,15 @@ class Article():
         return self._score_context
     
     
-    #Cited by - Returns count of unique authors for posts cited on various medias.
+    #Cited by
+    #Returns count of unique authors for posts cited on various medias.
+
     @property
     def cited_by_facebook_walls_count(self):
-        """Return number of posts made on public facebook walls mentioning chozen article."""
+        """
+        Return number of posts made on public facebook walls mentioning chozen
+        article.
+        """
         return  self._cited_by_facebook_walls_count 
     
     @property
