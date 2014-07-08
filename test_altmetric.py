@@ -90,10 +90,3 @@ class TestAltmetric(TestCase):
     def test__create_article(self):
         article = self.alt._create_article(None)
         self.assertFalse(article)
-
-    def test__convert_to_dict_empty(self):
-        self.assertRaises(JSONParseException, self.alt._convert_to_dict, None)
-
-    def test__convert_to_dict_average(self):
-        with open('average.json') as raw_json:
-            self.assertIsInstance(self.alt._convert_to_dict(raw_json), dict)

@@ -103,16 +103,6 @@ class Altmetric(object):
             for result in raw_json.get('results', []):
                 yield self._create_article(result)
 
-    def _convert_to_dict(self, raw):
-        try:
-            if isinstance(raw, file):
-                return json.load(raw)
-            elif isinstance(raw, requests.Response):
-                return raw.json()
-
-        except ValueError as e:
-            raise JSONParseException(e.message)
-
     def _get_altmetrics(self, method, *args, **kwargs):
         """
         Request information from Altmetric. Return a dictionary.
@@ -122,7 +112,10 @@ class Altmetric(object):
         params.update(self.api_key)
         response = requests.get(request_url, params = params)
         if response.status_code == 200:
-            return self._convert_to_dict(response)
+            try:
+                return response.json()
+            except ValueError as e:
+                raise JSONParseException(e.message)
         elif response.status_code in (404, 400): #should i handle this differently
             return {}
         else:
