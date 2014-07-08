@@ -25,6 +25,12 @@ class JSONParseException(AltmetricException):
     """
     pass
 
+class IDTypeMismatch(AltmetricException):
+    """
+    The ID entered does not match the type you selected.
+    """
+    pass
+
 class AltmetricHTTPException(AltmetricException):
     """A query argument or setting was formatted incorrectly."""
     def __init__(self, status_code):
@@ -82,14 +88,15 @@ class Altmetric(object):
         doi_prefix = None, nlmid = None, subjects = None, cited_in = None):
 
         #timeframe = self._check_timeframe(timeframe)
-        #should i collect metadata about the query? where do i store that?
+        #should I collect metadata about the query? where do i store that?
 
         while(1):
             raw_json = self._get_altmetrics('citations', timeframe,
-                page = page, num_results = num_results ,
+                page = page, num_results = num_results,
                 doi_prefix = doi_prefix, nlmid = nlmid,
                 subjects = subjects, cited_in = cited_in)
             page += 1
+            print raw_json
             if not raw_json:
                 break
             for result in raw_json.get('results', []):
@@ -503,8 +510,9 @@ if __name__ == "__main__": #for mini tests
         api_key = f.read()
 
     metric_object = Altmetric(api_key)
-    articles = metric_object.articles_from_timeframe("1d")
-    #article = metric_object.article_from_doi("10.1038/news.2011.49")
-    for list_ in articles:
-        print list_
+    #articles = metric_object.articles_from_timeframe("1d")
+    article = metric_object.article_from_doi("10.1371/journal.pone.0000308")
+    print article
+    #for list_ in articles:
+        #print list_
 
