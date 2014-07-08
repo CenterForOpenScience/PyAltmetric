@@ -6,10 +6,9 @@ __author__ = 'Lauren'
 
 class TestArticle(TestCase):
     def setUp(self):
-        raw_json = open('average.json')
-        raw_dict = json.load(raw_json)
-        print(raw_dict)
-        self.art = Article(raw_dict)
+        with open('full.json') as raw_json:
+            raw_dict = json.load(raw_json)
+            self.art = Article(raw_dict)
 
     def test__parse_raw_empty(self):
         #An empty dictionary would never actually be passed to this
@@ -63,6 +62,11 @@ class TestArticle(TestCase):
 
 
     def test__parse_raw_average(self):
+        with open('average.json') as raw_json:
+            raw_dict = json.load(raw_json)
+            self.art._raw = raw_dict
+            self.art._parse_raw()
+
         self.assertTrue(self.art._title)
         self.assertFalse(self.art._abstract)
         self.assertFalse(self.art._abstract_source)
@@ -112,11 +116,6 @@ class TestArticle(TestCase):
 
 
     def test__parse_raw_full(self):
-        raw_json = open('full.json')
-        raw_dict = json.load(raw_json)
-        self.art._raw = raw_dict
-        self.art._parse_raw()
-
         self.assertTrue(self.art._title)
         self.assertTrue(self.art._abstract)
         self.assertTrue(self.art._abstract_source)
@@ -163,11 +162,6 @@ class TestArticle(TestCase):
         self.assertTrue(self.art._altmetric_images)
 
     def test__properties(self):
-        raw_json = open('full.json')
-        raw_dict = json.load(raw_json)
-        self.art._raw = raw_dict
-        self.art._parse_raw()
-
         self.assertTrue(self.art.raw_dictionary)
         self.assertTrue(self.art.title)
         self.assertTrue(self.art.abstract)
@@ -215,11 +209,7 @@ class TestArticle(TestCase):
         self.assertTrue(self.art.altmetric_images)
 
     def test__parse_score_history_average(self):
-        old_history = {
-            "at":164.966, "1d":0,"2d":0,"3d":0,
-            "4d":0,"5d":0,"6d":0,"1w":0,
-            "1m":0,"3m":0,"6m":0,"1y":0
-            }
+        old_history = self.art.raw_dictionary.get("history")
         correct_history = {
             "all time":164.966, "past day":0,"past 2 days":0,"past 3 days":0,
             "past 4 days":0,"past 5 days":0,"past 6 days":0,"past week":0,
@@ -241,7 +231,7 @@ class TestArticle(TestCase):
         self.assertFalse(time)
 
     def test__parse_publisher_subjects_average(self):
-        old_subjects  = [{"name":"Public Health And Health Services","scheme":"era"}]
+        old_subjects  = self.art.raw_dictionary.get("publisher_subjects")
         correct_subjects = ["Public Health And Health Services"]
         new_subjects = self.art._parse_publisher_subjects(old_subjects)
         self.assertEquals(correct_subjects, new_subjects)
@@ -251,21 +241,7 @@ class TestArticle(TestCase):
         self.assertEquals(self.art._parse_publisher_subjects({}),[])
 
     def test__parse_score_context_average(self):
-        old_context = {
-            "all":
-                {"count":2162451,"mean":4.7684323457198,"rank":4979,"pct":99,
-                 "higher_than":2157568},
-            "journal":
-                {"count":25073,"mean":38.781049218251,"rank":1332,"pct":94,
-                 "higher_than":23741},
-            "similar_age_3m":
-                {"count":54719,"mean":4.231628860704,"rank":98,"pct":99,
-                 "higher_than":54621},
-            "similar_age_journal_3m":
-                {"count":869,"mean":41.477870967742,"rank":41,"pct":95,
-                 "higher_than":828}
-            }
-
+        old_context = self.art.raw_dictionary.get("context")
         correct_context = {
             "all":
                 {"count":2162451,"mean":4.7684323457198,"rank":4979,"pct":99,

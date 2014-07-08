@@ -14,6 +14,7 @@ wrapper altmetric.py which is licensed under the MIT open source license.
 import requests
 import datetime
 import warnings
+import json
 
 class AltmetricException(Exception):
     """Base class for any altmetric_library error."""
@@ -60,12 +61,12 @@ class Altmetric(object):
 
     #Make articles
     def article_from_doi(self, doi):
-        """Create an Article object using DOI"""
+        """Create an Article object using DOI."""
         raw_json = self._get_altmetrics('doi', doi)
         return self._create_article(raw_json)
 
     def article_from_pmid(self, pmid):
-        """Create an Article object using PMID"""
+        """Create an Article object using PMID."""
         raw_json = self._get_altmetrics('pmid', pmid)
         return self._create_article(raw_json)
     
@@ -76,12 +77,12 @@ class Altmetric(object):
         return self._create_article(raw_json)
 
     def article_from_ads(self, ads_bibcode):
-        """Create an Article object using ADS Bibcode"""
+        """Create an Article object using ADS Bibcode."""
         raw_json = self._get_altmetrics('ads', ads_bibcode)
         return self._create_article(raw_json)
     
     def article_from_arxiv(self, arxiv_id):
-        """Create an Article object using arXiv ID"""
+        """Create an Article object using arXiv ID."""
         raw_json = self._get_altmetrics('arxiv', arxiv_id)
         return self._create_article(raw_json)
 
@@ -102,11 +103,15 @@ class Altmetric(object):
             for result in raw_json.get('results', []):
                 yield self._create_article(result)
 
-    def _convert_raw_json(self, raw):
+    def _convert_to_dict(self, raw):
         try:
+            if isinstance(raw, file):
+                return json.load(raw)
+            elif isinstance(raw, requests.Response):
                 return raw.json()
-            except ValueError as e:
-                raise JSONParseException(e.message)
+
+        except ValueError as e:
+            raise JSONParseException(e.message)
 
     def _get_altmetrics(self, method, *args, **kwargs):
         """
@@ -117,7 +122,7 @@ class Altmetric(object):
         params.update(self.api_key)
         response = requests.get(request_url, params = params)
         if response.status_code == 200:
-            return self._convert_raw_json(response)
+            return self._convert_to_dict(response)
         elif response.status_code in (404, 400): #should i handle this differently
             return {}
         else:

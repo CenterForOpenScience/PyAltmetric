@@ -1,5 +1,6 @@
 from unittest import TestCase
 from altmetric_library import *
+import json
 
 __author__ = 'Lauren'
 
@@ -8,15 +9,15 @@ class TestAltmetric(TestCase):
     def setUp(self):
         self.alt = Altmetric()
 
-    def test_article_from_doi(self):
+    def test_article_from_doi_wrong(self):
         article = self.alt.article_from_doi('a')
         self.assertFalse(article)
 
+    def test_article_from_doi_correct(self):
         article = self.alt.article_from_doi('10.1371/journal.pone.0000308')
         self.assertTrue(article)
 
-        #should i write exceptions for if a key doesnt look like the type
-        #specified?
+        #should i write exceptions for if a key doesnt look like the correct type
 
     def test_article_from_pmid_wrong(self):
         article = self.alt.article_from_pmid('a')
@@ -64,8 +65,8 @@ class TestAltmetric(TestCase):
         self.assertTrue(articles)
 
         #use moking?
-        #doesnt show full coverage ebcause doenst go through the generator unless
-        #i use it
+        #doesnt show full coverage because doenst go through the generator
+        # unless i use it
         #should i check more more with what is happening using different kwargs?
         #I should check the formatting of the strings?
 
@@ -90,12 +91,9 @@ class TestAltmetric(TestCase):
         article = self.alt._create_article(None)
         self.assertFalse(article)
 
+    def test__convert_to_dict_empty(self):
+        self.assertRaises(JSONParseException, self.alt._convert_to_dict, None)
 
-    # def test_api_version(self):
-    #     self.fail()
-    #
-    # def test_api_url(self):
-    #     self.fail()
-    #
-    # def test_api_key(self):
-    #     self.fail()
+    def test__convert_to_dict_average(self):
+        with open('average.json') as raw_json:
+            self.assertIsInstance(self.alt._convert_to_dict(raw_json), dict)
