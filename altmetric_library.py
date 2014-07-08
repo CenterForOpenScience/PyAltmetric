@@ -89,6 +89,23 @@ class Altmetric(object):
     def articles_from_timeframe(self, timeframe, page = 1, num_results = 100,
         doi_prefix = None, nlmid = None, subjects = None, cited_in = None):
 
+        """
+        Returns articles with mentions within a certain timeframe keyword
+        arguments can further limit the search.
+
+        :param timeframe: Argument for past x days/months/years.
+        :param page: Integer. Which page of results you are on.
+        :param num_results: 1-100. Number of results per page.
+        :param doi_prefix: Limits results to those with this doi prefix.
+        :param nlmid: List of journal NLM IDs.
+        :param subjects: List of slugified journal subjects, accepts NLM
+            subject ontology term(s).
+        :param cited_in: Options of facebook, blogs, linkedin, video,
+            pinterest, gplus,twitter, reddit, news, f1000, rh, qna,
+            forum, peerreview.
+        :return:
+        """
+
         #why give page? who wants to start looking at results on page 2?
         #timeframe = self._check_timeframe(timeframe)
         #should I collect metadata about the query? where do i store that?
@@ -123,6 +140,7 @@ class Altmetric(object):
             raise AltmetricHTTPException(response.status_code)
 
     def _create_article(self, json):
+        """Return an article object."""
         try:
             return Article(json)
         except AttributeError:
@@ -147,6 +165,8 @@ class Article():
         Create an article object. Get raw dictionary from
         Altmetrics JSON. Parse dictionary into attributes.
         """
+        #should i make it so that it can pass me a string?
+
         if raw_json:
             self._raw  = raw_json
             self._parse_raw()
@@ -190,8 +210,7 @@ class Article():
             self._raw.get('context', {}))  
         self._last_updated = self._convert_to_datetime(
             self._raw.get('last_updated'))
-        #self._downloads = self._raw.get('downloads', 0)
-        self._schema  = self._raw.get('schema') #FIX schema for what
+        self._schema  = self._raw.get('schema')#schema for what?
         
         self._cited_by_facebook_walls_count = self._raw.get(
             'cited_by_fbwalls_count')
@@ -505,18 +524,3 @@ class Article():
         'small', 'medium', and 'large'.
         """
         return self._altmetric_images
-
-
-if __name__ == "__main__": #for mini tests
-
-    api_key = ''
-    with open("altmetric_api_key.txt", "r") as f:
-        api_key = f.read()
-
-    metric_object = Altmetric(api_key)
-    #articles = metric_object.articles_from_timeframe("1d")
-    article = metric_object.article_from_doi("10.1371/journal.pone.0000308")
-    print article
-    #for list_ in articles:
-        #print list_
-

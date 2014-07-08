@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="5399d655-4ab6-4f1c-b719-0606b2cc425a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/altmetric_library.py" afterPath="$PROJECT_DIR$/altmetric_library.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_altmetric.py" afterPath="$PROJECT_DIR$/test_altmetric.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_article.py" afterPath="$PROJECT_DIR$/test_article.py" />
     </list>
     <ignored path="altmetric-python-library.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -72,8 +70,8 @@
           <file leaf-file-name="altmetric_library.py" pinned="false" current="true" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/altmetric_library.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.6547619" vertical-offset="870" max-vertical-offset="7920">
-                  <caret line="91" column="72" selection-start-line="91" selection-start-column="72" selection-end-line="91" selection-end-column="72" />
+                <state vertical-scroll-proportion="5.9404764" vertical-offset="3384" max-vertical-offset="7980">
+                  <caret line="525" column="37" selection-start-line="525" selection-start-column="37" selection-end-line="525" selection-end-column="37" />
                   <folding>
                     <element signature="e#356#371#0" expanded="true" />
                   </folding>
@@ -110,8 +108,8 @@
           <file leaf-file-name="test_article.py" pinned="false" current="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/test_article.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.88095236" vertical-offset="3189" max-vertical-offset="3945">
-                  <caret line="260" column="63" selection-start-line="260" selection-start-column="63" selection-end-line="260" selection-end-column="63" />
+                <state vertical-scroll-proportion="1.1507937" vertical-offset="0" max-vertical-offset="3945">
+                  <caret line="61" column="51" selection-start-line="61" selection-start-column="51" selection-end-line="61" selection-end-column="51" />
                   <folding />
                 </state>
               </provider>
@@ -694,14 +692,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_altmetric.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="18.23077" vertical-offset="549" max-vertical-offset="1305">
-          <caret line="7" column="30" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/average.json">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="90">
@@ -710,18 +700,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/test_altmetric.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="18.23077" vertical-offset="549" max-vertical-offset="1305">
+          <caret line="7" column="30" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/test_article.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.88095236" vertical-offset="3189" max-vertical-offset="3945">
-          <caret line="260" column="63" selection-start-line="260" selection-start-column="63" selection-end-line="260" selection-end-column="63" />
+        <state vertical-scroll-proportion="1.1507937" vertical-offset="0" max-vertical-offset="3945">
+          <caret line="61" column="51" selection-start-line="61" selection-start-column="51" selection-end-line="61" selection-end-column="51" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/altmetric_library.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6547619" vertical-offset="870" max-vertical-offset="7920">
-          <caret line="91" column="72" selection-start-line="91" selection-start-column="72" selection-end-line="91" selection-end-column="72" />
+        <state vertical-scroll-proportion="5.9404764" vertical-offset="3384" max-vertical-offset="7980">
+          <caret line="525" column="37" selection-start-line="525" selection-start-column="37" selection-end-line="525" selection-end-column="37" />
           <folding>
             <element signature="e#356#371#0" expanded="true" />
           </folding>
