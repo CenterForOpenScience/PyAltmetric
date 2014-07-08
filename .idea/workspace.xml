@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5399d655-4ab6-4f1c-b719-0606b2cc425a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/altmetric_library.py" afterPath="$PROJECT_DIR$/altmetric_library.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_altmetric.py" afterPath="$PROJECT_DIR$/test_altmetric.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test_article.py" afterPath="$PROJECT_DIR$/test_article.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="altmetric-python-library.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -67,8 +64,8 @@
       <file leaf-file-name="test_altmetric.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test_altmetric.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.12687969" vertical-offset="0" max-vertical-offset="1965">
-              <caret line="10" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
+            <state vertical-scroll-proportion="0.098684214" vertical-offset="0" max-vertical-offset="1575">
+              <caret line="8" column="30" selection-start-line="8" selection-start-column="30" selection-end-line="8" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -674,8 +671,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test_altmetric.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.12687969" vertical-offset="0" max-vertical-offset="1965">
-          <caret line="10" column="4" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="4" />
+        <state vertical-scroll-proportion="0.098684214" vertical-offset="0" max-vertical-offset="1575">
+          <caret line="8" column="30" selection-start-line="8" selection-start-column="30" selection-end-line="8" selection-end-column="30" />
           <folding />
         </state>
       </provider>

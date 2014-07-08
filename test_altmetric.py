@@ -8,32 +8,6 @@ class TestAltmetric(TestCase):
     def setUp(self):
         self.alt = Altmetric()
 
-    def test_altmetric_init(self):
-        a = Altmetric()
-        self.assertEqual(a._api_key, {})
-        self.assertEqual(a._api_version, 'v1')
-        self.assertEqual(a._api_url, "http://api.altmetric.com/v1/")
-
-        a = Altmetric(api_version = 'v2')
-        self.assertEqual(a._api_key, {})
-        self.assertEqual(a._api_version, 'v2')
-        self.assertEqual(a._api_url, 'http://api.altmetric.com/v2/')
-
-        a = Altmetric(api_key = '1234')
-        self.assertEqual(a._api_key, {'key' : '1234'})
-        self.assertEqual(a._api_version, 'v1')
-        self.assertEqual(a._api_url, 'http://api.altmetric.com/v1/')
-
-        a = Altmetric(api_key = '1234', api_version = 'v2')
-        self.assertEqual(a._api_key, {'key' : '1234'})
-        self.assertEqual(a._api_version, 'v2')
-        self.assertEqual(a._api_url, 'http://api.altmetric.com/v2/')
-
-        #should i get mad if version number looks wrong?
-        #not two characters or not starting with a v?
-        #should i cahnge it so version number is actually a number?
-        #i know this is excessive. what part should i check?
-
     def test_article_from_doi(self):
         article = self.alt.article_from_doi('a')
         self.assertFalse(article)
