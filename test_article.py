@@ -1,6 +1,7 @@
 from unittest import TestCase
 from altmetric_library import Article
 import json
+import datetime
 
 __author__ = 'Lauren'
 
@@ -15,50 +16,50 @@ class TestArticle(TestCase):
         self.art._raw = {}
         self.art._parse_raw()
 
-        self.assertFalse(self.art._title)
-        self.assertFalse(self.art._abstract)
-        self.assertFalse(self.art._abstract_source)
-        self.assertFalse(self.art._journal)
-        self.assertFalse(self.art._subjects)
-        self.assertFalse(self.art._added_on)
-        self.assertFalse(self.art._published_on)
-        self.assertFalse(self.art._url)
-        self.assertFalse(self.art._is_open_access)
-        self.assertFalse(self.art._scopus_subjects)
-        self.assertFalse(self.art._publisher_subjects)
-        self.assertFalse(self.art._taglines)
+        self.assertFalse(self.art.title)
+        self.assertFalse(self.art.abstract)
+        self.assertFalse(self.art.abstract_source)
+        self.assertFalse(self.art.journal)
+        self.assertFalse(self.art.subjects)
+        self.assertFalse(self.art.added_on)
+        self.assertFalse(self.art.published_on)
+        self.assertFalse(self.art.url)
+        self.assertFalse(self.art.is_open_access)
+        self.assertFalse(self.art.scopus_subjects)
+        self.assertFalse(self.art.publisher_subjects)
+        self.assertFalse(self.art.taglines)
 
-        self.assertFalse(self.art._doi)
-        self.assertFalse(self.art._nlmid)
-        self.assertFalse(self.art._pmid)
-        self.assertFalse(self.art._altmetric_id)
-        self.assertFalse(self.art._arxiv_id)
-        self.assertFalse(self.art._ads_id)
-        self.assertFalse(self.art._issns)
+        self.assertFalse(self.art.doi)
+        self.assertFalse(self.art.nlmid)
+        self.assertFalse(self.art.pmid)
+        self.assertFalse(self.art.altmetric_id)
+        self.assertFalse(self.art.arxiv_id)
+        self.assertFalse(self.art.ads_id)
+        self.assertFalse(self.art.issns)
 
-        self.assertFalse(self.art._score)
-        self.assertFalse(self.art._score_history)
-        self.assertFalse(self.art._score_context)
-        self.assertFalse(self.art._last_updated)
-        self.assertFalse(self.art._schema)
-        self.assertFalse(self.art._cited_by_facebook_walls_count)
-        self.assertFalse(self.art._cited_by_redits_count)
-        self.assertFalse(self.art._cited_by_tweeters_count)
-        self.assertFalse(self.art._cited_by_google_plus_count)
-        self.assertFalse(self.art._cited_by_msm_count)
-        self.assertFalse(self.art._cited_by_delicious_count)
-        self.assertFalse(self.art._cited_by_qs_count)
-        self.assertFalse(self.art._cited_by_posts_count)
-        self.assertFalse(self.art._cited_by_accounts_count)
-        self.assertFalse(self.art._cited_by_forums_count)
-        self.assertFalse(self.art._cited_by_peer_review_sites_count)
-        self.assertFalse(self.art._cited_by_feeds_count)
-        self.assertFalse(self.art._cited_by_videos_count)
-        self.assertFalse(self.art._cohorts)
-        self.assertFalse(self.art._readers_count)
-        self.assertFalse(self.art._readers)
-        self.assertFalse(self.art._altmetric_details_url)
-        self.assertFalse(self.art._altmetric_images)
+        self.assertFalse(self.art.score)
+        self.assertFalse(self.art.score_history)
+        self.assertFalse(self.art.score_context)
+        self.assertFalse(self.art.last_updated)
+        self.assertFalse(self.art.schema)
+        self.assertFalse(self.art.cited_by_facebook_walls_count)
+        self.assertFalse(self.art.cited_by_redits_count)
+        self.assertFalse(self.art.cited_by_tweeters_count)
+        self.assertFalse(self.art.cited_by_google_plus_count)
+        self.assertFalse(self.art.cited_by_msm_count)
+        self.assertFalse(self.art.cited_by_delicious_count)
+        self.assertFalse(self.art.cited_by_qs_count)
+        self.assertFalse(self.art.cited_by_posts_count)
+        self.assertFalse(self.art.cited_by_accounts_count)
+        self.assertFalse(self.art.cited_by_forums_count)
+        self.assertFalse(self.art.cited_by_peer_review_sites_count)
+        self.assertFalse(self.art.cited_by_feeds_count)
+        self.assertFalse(self.art.cited_by_videos_count)
+        self.assertFalse(self.art.cohorts)
+        self.assertFalse(self.art.readers_count)
+        self.assertFalse(self.art.readers)
+        self.assertFalse(self.art.altmetric_details_url)
+        self.assertFalse(self.art.altmetric_images)
 
 
     def test__parse_raw_average(self):
@@ -67,102 +68,98 @@ class TestArticle(TestCase):
             self.art._raw = raw_dict
             self.art._parse_raw()
 
-        self.assertTrue(self.art._title)
-        self.assertFalse(self.art._abstract)
-        self.assertFalse(self.art._abstract_source)
-        self.assertTrue(self.art._journal)
-        self.assertTrue(self.art._subjects)
-        print(self.art._raw.get("added_on"))
-        self.assertTrue(self.art._added_on)
-        self.assertTrue(self.art._published_on)
-        self.assertTrue(self.art._url)
-        self.assertFalse(self.art._is_open_access)
-        #its false because its a boolean not because it doesnt exits hmmmm
-        self.assertTrue(self.art._scopus_subjects)
-        self.assertFalse(self.art._publisher_subjects)
-        self.assertTrue(self.art._taglines)
+        self.assertTrue(self.art.title)
+        self.assertFalse(self.art.abstract)
+        self.assertFalse(self.art.abstract_source)
+        self.assertTrue(self.art.journal)
+        self.assertTrue(self.art.subjects)
+        self.assertIsInstance(self.art.subjects, list)
 
-        self.assertTrue(self.art._doi)
-        self.assertTrue(self.art._nlmid)
-        self.assertFalse(self.art._pmid)
-        self.assertTrue(self.art._altmetric_id)
-        self.assertFalse(self.art._arxiv_id)
-        self.assertFalse(self.art._ads_id)
-        self.assertTrue(self.art._issns)
+        self.assertTrue(self.art.added_on)
+        self.assertIsInstance(self.art.added_on, datetime.datetime)
 
-        self.assertTrue(self.art._score)
-        self.assertTrue(self.art._score_history)
-        self.assertTrue(self.art._score_context)
-        self.assertTrue(self.art._last_updated)
-        self.assertTrue(self.art._schema)
-        self.assertTrue(self.art._cited_by_facebook_walls_count)
-        self.assertTrue(self.art._cited_by_redits_count)
-        self.assertTrue(self.art._cited_by_tweeters_count)
-        self.assertFalse(self.art._cited_by_google_plus_count)
-        self.assertTrue(self.art._cited_by_msm_count)
-        self.assertFalse(self.art._cited_by_delicious_count)
-        self.assertFalse(self.art._cited_by_qs_count)
-        self.assertTrue(self.art._cited_by_posts_count)
-        self.assertTrue(self.art._cited_by_accounts_count)
-        self.assertFalse(self.art._cited_by_forums_count)
-        self.assertFalse(self.art._cited_by_peer_review_sites_count)
-        self.assertTrue(self.art._cited_by_feeds_count)
-        self.assertFalse(self.art._cited_by_videos_count)
-        self.assertTrue(self.art._cohorts)
-        self.assertTrue(self.art._readers_count)
-        self.assertTrue(self.art._readers)
-        self.assertTrue(self.art._altmetric_details_url)
-        self.assertTrue(self.art._altmetric_images)
+        self.assertTrue(self.art.published_on)
+        self.assertIsInstance(self.art.published_on, datetime.datetime)
 
+        self.assertTrue(self.art.url)
+        self.assertFalse(self.art.is_open_access)
+        self.assertIsInstance(self.art.is_open_access, bool)
+
+        self.assertTrue(self.art.scopus_subjects)
+        self.assertIsInstance(self.art.scopus_subjects, list)
+
+        self.assertFalse(self.art.publisher_subjects)
+        self.assertTrue(self.art.taglines)
+        self.assertIsInstance(self.art.taglines, list)
+
+        self.assertTrue(self.art.doi)
+        self.assertTrue(self.art.nlmid)
+        self.assertFalse(self.art.pmid)
+        self.assertTrue(self.art.altmetric_id)
+        self.assertFalse(self.art.arxiv_id)
+        self.assertFalse(self.art.ads_id)
+        self.assertTrue(self.art.issns)
+        self.assertIsInstance(self.art.taglines, list)
+
+        self.assertTrue(self.art.score)
+        self.assertIsInstance(self.art.score, float)
+
+        self.assertTrue(self.art.score_history)
+        self.assertIsInstance(self.art.score_history, dict)
+
+        self.assertTrue(self.art.score_context)
+        self.assertIsInstance(self.art.score_context, dict)
+
+        self.assertTrue(self.art.last_updated)
+        self.assertIsInstance(self.art.last_updated, datetime.datetime)
+
+        self.assertTrue(self.art.schema)
+        self.assertTrue(self.art.cited_by_facebook_walls_count)
+        self.assertIsInstance(self.art.cited_by_facebook_walls_count, int)
+
+        self.assertTrue(self.art.cited_by_redits_count)
+        self.assertIsInstance(self.art.cited_by_redits_count, int)
+
+        self.assertTrue(self.art.cited_by_tweeters_count)
+        self.assertIsInstance(self.art.cited_by_tweeters_count, int)
+
+        self.assertFalse(self.art.cited_by_google_plus_count)
+
+        self.assertTrue(self.art.cited_by_msm_count)
+        self.assertIsInstance(self.art.cited_by_msm_count, int)
+
+        self.assertFalse(self.art.cited_by_delicious_count)
+        self.assertFalse(self.art.cited_by_qs_count)
+
+        self.assertTrue(self.art.cited_by_posts_count)
+        self.assertIsInstance(self.art.cited_by_posts_count, int)
+
+        self.assertTrue(self.art.cited_by_accounts_count)
+        self.assertIsInstance(self.art.cited_by_accounts_count, int)
+
+        self.assertFalse(self.art.cited_by_forums_count)
+
+        self.assertFalse(self.art.cited_by_peer_review_sites_count)
+
+        self.assertTrue(self.art.cited_by_feeds_count)
+        self.assertIsInstance(self.art.cited_by_feeds_count, int)
+
+        self.assertFalse(self.art.cited_by_videos_count)
+
+        self.assertTrue(self.art.cohorts)
+        self.assertIsInstance(self.art.cohorts, dict)
+
+        self.assertTrue(self.art.readers_count)
+        self.assertIsInstance(self.art.readers_count, int)
+
+        self.assertTrue(self.art.readers)
+        self.assertIsInstance(self.art.readers, dict)
+
+        self.assertTrue(self.art.altmetric_details_url)
+        self.assertTrue(self.art.altmetric_images)
+        self.assertIsInstance(self.art.altmetric_images, dict)
 
     def test__parse_raw_full(self):
-        self.assertTrue(self.art._title)
-        self.assertTrue(self.art._abstract)
-        self.assertTrue(self.art._abstract_source)
-        self.assertTrue(self.art._journal)
-        self.assertTrue(self.art._subjects)
-        self.assertTrue(self.art._added_on)
-        self.assertTrue(self.art._published_on)
-        self.assertTrue(self.art._url)
-        self.assertTrue(self.art._is_open_access)
-        self.assertTrue(self.art._scopus_subjects)
-        self.assertTrue(self.art._publisher_subjects)
-        self.assertTrue(self.art._taglines)
-
-        self.assertTrue(self.art._doi)
-        self.assertTrue(self.art._nlmid)
-        self.assertTrue(self.art._pmid)
-        self.assertTrue(self.art._altmetric_id)
-        self.assertTrue(self.art._arxiv_id)
-        self.assertTrue(self.art._ads_id)
-        self.assertTrue(self.art._issns)
-
-        self.assertTrue(self.art._score)
-        self.assertTrue(self.art._score_history)
-        self.assertTrue(self.art._score_context)
-        self.assertTrue(self.art._last_updated)
-        self.assertTrue(self.art._schema)
-        self.assertTrue(self.art._cited_by_facebook_walls_count)
-        self.assertTrue(self.art._cited_by_redits_count)
-        self.assertTrue(self.art._cited_by_tweeters_count)
-        self.assertTrue(self.art._cited_by_google_plus_count)
-        self.assertTrue(self.art._cited_by_msm_count)
-        self.assertTrue(self.art._cited_by_delicious_count)
-        self.assertTrue(self.art._cited_by_qs_count)
-        self.assertTrue(self.art._cited_by_posts_count)
-        self.assertTrue(self.art._cited_by_accounts_count)
-        self.assertTrue(self.art._cited_by_forums_count)
-        self.assertTrue(self.art._cited_by_peer_review_sites_count)
-        self.assertTrue(self.art._cited_by_feeds_count)
-        self.assertTrue(self.art._cited_by_videos_count)
-        self.assertTrue(self.art._cohorts)
-        self.assertTrue(self.art._readers_count)
-        self.assertTrue(self.art._readers)
-        self.assertTrue(self.art._altmetric_details_url)
-        self.assertTrue(self.art._altmetric_images)
-
-    def test__properties(self):
-        self.assertTrue(self.art.raw_dictionary)
         self.assertTrue(self.art.title)
         self.assertTrue(self.art.abstract)
         self.assertTrue(self.art.abstract_source)
@@ -175,7 +172,6 @@ class TestArticle(TestCase):
         self.assertTrue(self.art.scopus_subjects)
         self.assertTrue(self.art.publisher_subjects)
         self.assertTrue(self.art.taglines)
-
         self.assertTrue(self.art.doi)
         self.assertTrue(self.art.nlmid)
         self.assertTrue(self.art.pmid)
@@ -183,7 +179,6 @@ class TestArticle(TestCase):
         self.assertTrue(self.art.arxiv_id)
         self.assertTrue(self.art.ads_id)
         self.assertTrue(self.art.issns)
-
         self.assertTrue(self.art.score)
         self.assertTrue(self.art.score_history)
         self.assertTrue(self.art.score_context)
@@ -222,12 +217,12 @@ class TestArticle(TestCase):
     def test__parse_score_history_empty(self):
         self.assertEqual(self.art._parse_score_history({}), {})
 
-    def test__convert_to_utc_average(self):
-        time = self.art._convert_to_utc(0)
-        self.assertEquals(time, "1970-01-01T00:00:00Z") #hmmmm ? day off
+    def test__convert_to_datetime_average(self):
+        time = self.art._convert_to_datetime(0)
+        self.assertIsInstance(time, datetime.datetime)
 
-    def test__convert_to_utc_empty(self):
-        time = self.art._convert_to_utc(None)
+    def test__convert_to_datetime_empty(self):
+        time = self.art._convert_to_datetime(None)
         self.assertFalse(time)
 
     def test__parse_publisher_subjects_average(self):

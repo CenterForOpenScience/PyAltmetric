@@ -17,8 +17,6 @@ class TestAltmetric(TestCase):
         article = self.alt.article_from_doi('10.1371/journal.pone.0000308')
         self.assertTrue(article)
 
-        #should i write exceptions for if a key doesnt look like the correct type
-
     def test_article_from_pmid_wrong(self):
         article = self.alt.article_from_pmid('a')
         self.assertFalse(article)
@@ -66,9 +64,6 @@ class TestAltmetric(TestCase):
 
         #use moking?
         #doesnt show full coverage because doenst go through the generator
-        # unless i use it
-        #should i check more more with what is happening using different kwargs?
-        #I should check the formatting of the strings?
 
     def test__get_altmetrics_average(self):
         response = self.alt._get_altmetrics('doi','10.1038/nature.2014.14583')
@@ -82,9 +77,6 @@ class TestAltmetric(TestCase):
         self.assertRaises(AltmetricHTTPException, self.alt._get_altmetrics,
             'fetch', 'doi','10.1038/nature.2014.14583')
 
-
-        #should i check if the method is one of the correct methods
-        #when i first run the program and throw an error there?
         #need to use mock for this for the json parse exception
 
     def test__create_article(self):

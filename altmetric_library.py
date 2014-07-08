@@ -89,6 +89,7 @@ class Altmetric(object):
     def articles_from_timeframe(self, timeframe, page = 1, num_results = 100,
         doi_prefix = None, nlmid = None, subjects = None, cited_in = None):
 
+        #why give page? who wants to start looking at results on page 2?
         #timeframe = self._check_timeframe(timeframe)
         #should I collect metadata about the query? where do i store that?
 
@@ -160,8 +161,8 @@ class Article():
         self._abstract_source = self._raw.get('abstract_source')
         self._journal = self._raw.get('journal')
         self._subjects = self._raw.get('subjects', [])
-        self._added_on = self._convert_to_utc(self._raw.get('added_on'))
-        self._published_on = self._convert_to_utc(
+        self._added_on = self._convert_to_datetime(self._raw.get('added_on'))
+        self._published_on = self._convert_to_datetime(
             self._raw.get('published_on'))
         self._url = self._raw.get('url')
         self._is_open_access = self._raw.get('is_oa')
@@ -187,37 +188,37 @@ class Article():
             self._raw.get('history', {}))
         self._score_context = self._parse_score_context(
             self._raw.get('context', {}))  
-        self._last_updated = self._convert_to_utc(
+        self._last_updated = self._convert_to_datetime(
             self._raw.get('last_updated'))
         #self._downloads = self._raw.get('downloads', 0)
         self._schema  = self._raw.get('schema') #FIX schema for what
         
         self._cited_by_facebook_walls_count = self._raw.get(
-            'cited_by_fbwalls_count', 0)
-        self._cited_by_redits_count = self._raw.get('cited_by_rdts_count', 0)
+            'cited_by_fbwalls_count')
+        self._cited_by_redits_count = self._raw.get('cited_by_rdts_count')
         self._cited_by_tweeters_count = self._raw.get(
-            'cited_by_tweeters_count', 0)
+            'cited_by_tweeters_count')
         self._cited_by_google_plus_count = self._raw.get(
-            'cited_by_gplus_count', 0)
-        self._cited_by_msm_count = self._raw.get('cited_by_msm_count', 0)
-        self._cited_by_delicious_count = self._raw.get('cited_by_delicious_count', 0)
-        self._cited_by_qs_count = self._raw.get('cited_by_qs_count', 0)
-        self._cited_by_posts_count = self._raw.get('cited_by_posts_count', 0)
+            'cited_by_gplus_count')
+        self._cited_by_msm_count = self._raw.get('cited_by_msm_count')
+        self._cited_by_delicious_count = self._raw.get('cited_by_delicious_count')
+        self._cited_by_qs_count = self._raw.get('cited_by_qs_count')
+        self._cited_by_posts_count = self._raw.get('cited_by_posts_count')
         self._cited_by_accounts_count = (
-            self._raw.get('cited_by_accounts_count', 0)
-            or self._raw.get('by_accounts_count', 0)
+            self._raw.get('cited_by_accounts_count')
+            or self._raw.get('by_accounts_count')
         )
 
-        self._cited_by_forums_count = self._raw.get('cited_by_forums_count', 0)
+        self._cited_by_forums_count = self._raw.get('cited_by_forums_count')
         self._cited_by_peer_review_sites_count = self._raw.get(
-            'cited_by_peer_review_sites_count', 0)
-        self._cited_by_feeds_count = self._raw.get('cited_by_feeds_count', 0)
-        self._cited_by_videos_count = self._raw.get('cited_by_videos_count', 0)
+            'cited_by_peer_review_sites_count')
+        self._cited_by_feeds_count = self._raw.get('cited_by_feeds_count')
+        self._cited_by_videos_count = self._raw.get('cited_by_videos_count')
 
 
         self._cohorts = self._raw.get('cohorts', {})
         
-        self._readers_count = self._raw.get('readers_count', 0)
+        self._readers_count = self._raw.get('readers_count')
         self._readers = self._raw.get('readers', {})
         
         self._altmetric_details_url = self._raw.get('details_url',)
@@ -242,11 +243,10 @@ class Article():
                 new_dictionary[date] = history[item]
         return new_dictionary
 
-    def _convert_to_utc(self, unix_time):
-        """Convert UNIX timestamp to UTC."""
+    def _convert_to_datetime(self, unix_time):
+        """Convert UNIX timestamp to datetime."""
         if isinstance(unix_time, int): #this line could cause us to lose data
-            return datetime.datetime.fromtimestamp(unix_time).strftime(
-                '%Y-%m-%dT%H:%M:%SZ')
+            return datetime.datetime.fromtimestamp(unix_time)
 
     def _parse_publisher_subjects(self, subjects):
         """
