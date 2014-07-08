@@ -9,6 +9,7 @@ wrapper altmetric.py which is licensed under the MIT open source license.
 
 #raise exceptions
 #fix timeframe to have everything
+#altmetric jid?
 
 import requests
 import datetime
@@ -96,11 +97,16 @@ class Altmetric(object):
                 doi_prefix = doi_prefix, nlmid = nlmid,
                 subjects = subjects, cited_in = cited_in)
             page += 1
-            print raw_json
             if not raw_json:
                 break
             for result in raw_json.get('results', []):
                 yield self._create_article(result)
+
+    def _convert_raw_json(self, raw):
+        try:
+                return raw.json()
+            except ValueError as e:
+                raise JSONParseException(e.message)
 
     def _get_altmetrics(self, method, *args, **kwargs):
         """
@@ -111,10 +117,7 @@ class Altmetric(object):
         params.update(self.api_key)
         response = requests.get(request_url, params = params)
         if response.status_code == 200:
-            try:
-                return response.json()
-            except ValueError as e:
-                raise JSONParseException(e.message)
+            return self._convert_raw_json(response)
         elif response.status_code in (404, 400): #should i handle this differently
             return {}
         else:
@@ -188,7 +191,7 @@ class Article():
             self._raw.get('context', {}))  
         self._last_updated = self._convert_to_utc(
             self._raw.get('last_updated'))
-        self._downloads = self._raw.get('downloads', 0)
+        #self._downloads = self._raw.get('downloads', 0)
         self._schema  = self._raw.get('schema') #FIX schema for what
         
         self._cited_by_facebook_walls_count = self._raw.get(
@@ -198,8 +201,8 @@ class Article():
             'cited_by_tweeters_count', 0)
         self._cited_by_google_plus_count = self._raw.get(
             'cited_by_gplus_count', 0)
-        self._cited_by_msm_count = ('cited_by_msm_count', 0)
-        self._cited_by_delicious_count = ('cited_by_delicious _count', 0)
+        self._cited_by_msm_count = self._raw.get('cited_by_msm_count', 0)
+        self._cited_by_delicious_count = self._raw.get('cited_by_delicious_count', 0)
         self._cited_by_qs_count = self._raw.get('cited_by_qs_count', 0)
         self._cited_by_posts_count = self._raw.get('cited_by_posts_count', 0)
         self._cited_by_accounts_count = (
@@ -207,16 +210,16 @@ class Article():
             or self._raw.get('by_accounts_count', 0)
         )
 
-        self._cited_by_forums_count = ('cited_by_forum_count', 0)
-        self._cited_by_peer_review_sites_count = \
-        ('cited_by_peer_review_sites_count', 0)
-        self._cited_by_feeds_count = ('cited_by_feeds_count', 0)
-        self._cited_by_videos_count = ('cited_by_videos_count', 0)
+        self._cited_by_forums_count = self._raw.get('cited_by_forums_count', 0)
+        self._cited_by_peer_review_sites_count = self._raw.get(
+            'cited_by_peer_review_sites_count', 0)
+        self._cited_by_feeds_count = self._raw.get('cited_by_feeds_count', 0)
+        self._cited_by_videos_count = self._raw.get('cited_by_videos_count', 0)
 
 
         self._cohorts = self._raw.get('cohorts', {})
         
-        self._readers_count = ('readers_count', 0)
+        self._readers_count = self._raw.get('readers_count', 0)
         self._readers = self._raw.get('readers', {})
         
         self._altmetric_details_url = self._raw.get('details_url',)
@@ -241,11 +244,11 @@ class Article():
                 new_dictionary[date] = history[item]
         return new_dictionary
 
-    def _convert_to_utc(self,unix_time):
+    def _convert_to_utc(self, unix_time):
         """Convert UNIX timestamp to UTC."""
-        if isinstance(unix_time, float): #this line could cause us to lose data
+        if isinstance(unix_time, int): #this line could cause us to lose data
             return datetime.datetime.fromtimestamp(unix_time).strftime(
-                '%Y-%m-%dT%H:%M:%Sz')
+                '%Y-%m-%dT%H:%M:%SZ')
 
     def _parse_publisher_subjects(self, subjects):
         """
@@ -264,11 +267,14 @@ class Article():
         """
         new_context = {}
         if context:
+            new_context['all'] = context.get(
+                'all', {})
             new_context['journal age'] = context.get(
                 'similar_age_journal_3m', {})
-            new_context['context age'] = context.get('similar_age_3m', {})
+            new_context['context age'] = context.get(
+                'similar_age_3m', {})
             new_context['journal'] = context.get('journal', {})
-        return new_context #key atribute error could happen here. how to deal?
+        return new_context
 
     def __repr__(self): #FIX unicode problems
         return self.title[:12].encode('UTF-8')
@@ -335,7 +341,7 @@ class Article():
     @property
     def taglines(self):
         """Return a list of related phrases"""
-        return self._tq
+        return self._taglines
     
     #Various ID's
     @property
@@ -387,10 +393,6 @@ class Article():
         return self._last_updated
     
     @property
-    def downloads(self):
-        return self._downloads
-    
-    @property
     def score_context(self):
         """
         Return a dictionary that allows you to compare an article's popularity
@@ -417,7 +419,7 @@ class Article():
         return self._cited_by_redits_count
     @property
     def cited_by_tweeters_count(self):
-        return self.cited_by_tweeters_count
+        return self._cited_by_tweeters_count
     
     @property
     def cited_by_google_plus_count(self):
@@ -488,7 +490,11 @@ class Article():
         (This is an experimental Altmetric feature).
         """
         return self._cohorts
-    
+
+    @property
+    def schema(self):
+        return self._schema
+
     @property
     def altmetric_details_url(self):
         return self._altmetric_details_url
