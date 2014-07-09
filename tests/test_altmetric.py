@@ -1,7 +1,7 @@
 from unittest import TestCase
 from altmetric_library import *
 import json
-from mock import Mock
+from mock import patch
 
 __author__ = 'Lauren Revere'
 

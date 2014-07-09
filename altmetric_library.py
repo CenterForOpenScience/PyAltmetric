@@ -12,6 +12,9 @@ import datetime
 import warnings
 import json
 
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
 class AltmetricException(Exception):
     """Base class for any altmetric_library error."""
     pass
@@ -40,8 +43,8 @@ class Altmetric(object):
         """Cache API key and version."""
         self._api_version = api_version
         if self._api_version != 'v1':
-            warnings.warn("This library has only been tested with API v1.\
-                If you try another version it will probably break.")
+            warnings.warn("This library has only been tested with API v1."
+                          "If you try another version it will probably break.")
 
         self._api_url = "http://api.altmetric.com/%s/" % self.api_version
 
@@ -202,7 +205,7 @@ class Article():
         self._doi = self._raw.get('doi')
         self._nlmid = self._raw.get('nlmid')
         self._pmid = self._raw.get('pmid')
-        self._altmetric_id = self._raw.get('altmetric_id')
+        self._altmetric_id = str(self._raw.get('altmetric_id', ""))
         self._arxiv_id = self._raw.get('arxiv_id')
         self._ads_id = self._raw.get('ads_id')
         self._issns = self._raw.get('issns', [])

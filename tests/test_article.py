@@ -182,31 +182,36 @@ class TestArticle(TestCase):
         self.assertTrue(self.art.scopus_subjects)
         self.assertTrue(self.art.publisher_subjects)
         self.assertTrue(self.art.taglines)
-        self.assertTrue(self.art.doi)
-        self.assertTrue(self.art.nlmid)
-        self.assertTrue(self.art.pmid)
-        self.assertTrue(self.art.altmetric_id)
-        self.assertTrue(self.art.arxiv_id)
-        self.assertTrue(self.art.ads_id)
+
+        self.assertEquals("10.1038/news.2011.490", self.art.doi)
+        self.assertEquals("0410462", self.art.nlmid)
+        self.assertEquals("21148220", self.art.pmid)
+        self.assertEquals("241939", self.art.altmetric_id)
+        self.assertEquals("1108.2455", self.art.arxiv_id)
+        self.assertEquals("2011arxiv1108.2455l", self.art.ads_id)
+
         self.assertTrue(self.art.issns)
         self.assertTrue(self.art.score)
         self.assertTrue(self.art.score_history)
         self.assertTrue(self.art.score_context)
         self.assertTrue(self.art.last_updated)
         self.assertTrue(self.art.schema)
-        self.assertTrue(self.art.cited_by_facebook_walls_count)
-        self.assertTrue(self.art.cited_by_redits_count)
-        self.assertTrue(self.art.cited_by_tweeters_count)
-        self.assertTrue(self.art.cited_by_google_plus_count)
-        self.assertTrue(self.art.cited_by_msm_count)
-        self.assertTrue(self.art.cited_by_delicious_count)
-        self.assertTrue(self.art.cited_by_qs_count)
-        self.assertTrue(self.art.cited_by_posts_count)
-        self.assertTrue(self.art.cited_by_accounts_count)
-        self.assertTrue(self.art.cited_by_forums_count)
-        self.assertTrue(self.art.cited_by_peer_review_sites_count)
-        self.assertTrue(self.art.cited_by_feeds_count)
-        self.assertTrue(self.art.cited_by_videos_count)
+
+        self.assertEquals(5, self.art.cited_by_facebook_walls_count)
+        self.assertEquals(1, self.art.cited_by_redits_count)
+        self.assertEquals(176, self.art.cited_by_tweeters_count)
+        self.assertEquals(3, self.art.cited_by_google_plus_count)
+        self.assertEquals(1, self.art.cited_by_msm_count)
+        self.assertEquals(1, self.art.cited_by_delicious_count)
+        self.assertEquals(1, self.art.cited_by_qs_count)
+        self.assertEquals(196, self.art.cited_by_posts_count)
+        self.assertEquals(186, self.art.cited_by_accounts_count)
+        self.assertEquals(6, self.art.cited_by_forums_count)
+        self.assertEquals(1, self.art.cited_by_peer_review_sites_count)
+        self.assertEquals(3, self.art.cited_by_feeds_count)
+        self.assertEquals(1, self.art.cited_by_videos_count)
+
+
         self.assertTrue(self.art.cohorts)
         self.assertTrue(self.art.readers_count)
         self.assertTrue(self.art.readers)
@@ -291,7 +296,3 @@ class TestArticle(TestCase):
 
     def test__parse_score_context_empty(self):
         self.assertEquals(self.art._parse_score_context({}),{})
-
-
-#Add mocking
-#Add checks for every value in article
