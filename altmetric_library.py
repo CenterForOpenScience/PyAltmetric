@@ -7,10 +7,6 @@ Some pieces of this library were inspired by or derived from the altmetric api
 wrapper altmetric.py which is licensed under the MIT open source license.
 """
 
-#raise exceptions
-#fix timeframe to have everything
-#altmetric jid?
-
 import requests
 import datetime
 import warnings
@@ -24,12 +20,6 @@ class JSONParseException(AltmetricException):
     """
     Failed to turn HTTP Response into JSON.
     Site is probably in the wrong format.
-    """
-    pass
-
-class IDTypeMismatch(AltmetricException):
-    """
-    The ID entered does not match the type you selected.
     """
     pass
 
@@ -93,7 +83,8 @@ class Altmetric(object):
         Returns articles with mentions within a certain timeframe keyword
         arguments can further limit the search.
 
-        :param timeframe: Argument for past x days/months/years.
+        :param timeframe: Argument for past x days/months/years. In format:
+         1d, 1m, 1y...
         :param page: Integer. Which page of results you are on.
         :param num_results: 1-100. Number of results per page.
         :param doi_prefix: Limits results to those with this doi prefix.
@@ -105,11 +96,6 @@ class Altmetric(object):
             forum, peerreview.
         :return:
         """
-
-        #why give page? who wants to start looking at results on page 2?
-        #timeframe = self._check_timeframe(timeframe)
-        #should I collect metadata about the query? where do i store that?
-
         while(1):
             raw_json = self._get_altmetrics('citations', timeframe,
                 page = page, num_results = num_results,
@@ -134,7 +120,7 @@ class Altmetric(object):
                 return response.json()
             except ValueError as e:
                 raise JSONParseException(e.message)
-        elif response.status_code in (404, 400): #should i handle this differently
+        elif response.status_code in (404, 400):
             return {}
         else:
             raise AltmetricHTTPException(response.status_code)
@@ -160,21 +146,40 @@ class Altmetric(object):
 
 
 class Article():
-    def __init__(self, raw_json):
+    def __init__(self, raw_dict):
         """
         Create an article object. Get raw dictionary from
         Altmetrics JSON. Parse dictionary into attributes.
         """
-        #should i make it so that it can pass me a string?
-
-        if raw_json:
-            self._raw  = raw_json
+        if raw_dict:
+            self._raw  = raw_dict
             self._parse_raw()
         else:
             raise AttributeError
-       
+
+    @classmethod
+    def from_json_file(cls, filename):
+        """Return article from filename or path."""
+        try:
+            with open(filename) as fi:
+                raw = json.load(fi)
+                obj = Article(raw)
+                return obj
+        except ValueError as e:
+            raise JSONParseException(e.message)
+
+    @classmethod
+    def from_json(cls, file_):
+        """Return an article from file."""
+        try:
+            raw = json.load(file_)
+            obj = Article(raw)
+            return obj
+        except ValueError as e:
+            raise JSONParseException(e.message)
+
     def _parse_raw(self):
-        """Extract all attributes from raw dictionary"""
+        """Extract all attributes from raw dictionary."""
         #Article Info
         self._title = self._raw.get('title')
         self._abstract = self._raw.get('abstract')
@@ -189,7 +194,7 @@ class Article():
 
         self._scopus_subjects = self._raw.get('scopus_subjects', [])
         self._publisher_subjects = self._parse_publisher_subjects\
-        (self._raw.get('publisher_subjects',[])) #FIX? am i losing info
+        (self._raw.get('publisher_subjects',[]))
 
         self._taglines = self._raw.get('tq', [])
         
@@ -211,7 +216,6 @@ class Article():
         self._last_updated = self._convert_to_datetime(
             self._raw.get('last_updated'))
         self._schema  = self._raw.get('schema')#schema for what?
-        
         self._cited_by_facebook_walls_count = self._raw.get(
             'cited_by_fbwalls_count')
         self._cited_by_redits_count = self._raw.get('cited_by_rdts_count')
@@ -244,8 +248,6 @@ class Article():
 
         self._altmetric_images = self._raw.get('images', {})
 
-
-    #Specific methods for reformatting dictionaries/lists that are difficult to read.        
     def _parse_score_history(self, history):
         """Make the score_history dictionary a little more readable."""
         new_dictionary = {}
@@ -263,8 +265,8 @@ class Article():
         return new_dictionary
 
     def _convert_to_datetime(self, unix_time):
-        """Convert UNIX timestamp to datetime."""
-        if isinstance(unix_time, int): #this line could cause us to lose data
+        """Convert UNIX timestamp to a datetime object."""
+        if isinstance(unix_time, int):
             return datetime.datetime.fromtimestamp(unix_time)
 
     def _parse_publisher_subjects(self, subjects):
@@ -278,7 +280,7 @@ class Article():
                 new_subjects.append(item['name'])
         return new_subjects
 
-    def _parse_score_context(self, context): #FIX possibally change the word percent
+    def _parse_score_context(self, context):
         """
         Change the names of the dictionaries in context to make more sense.
         """
@@ -293,17 +295,16 @@ class Article():
             new_context['journal'] = context.get('journal', {})
         return new_context
 
-    def __repr__(self): #FIX unicode problems
+    def __repr__(self):
         return self.title[:12].encode('UTF-8')
 
-    def __str__(self): #FIX unicode problems
+    def __str__(self):
         string = u""
         for item in self._raw:
             string += unicode(item) + u": " + unicode(self._raw[item]) + u'\n'
         return unicode(string).encode('UTF-8')
     
     #Basic info
-
     @property
     def raw_dictionary(self):
         return self._raw
@@ -426,7 +427,7 @@ class Article():
     @property
     def cited_by_facebook_walls_count(self):
         """
-        Return number of posts made on public facebook walls mentioning chozen
+        Return number of posts made on public facebook walls mentioning chosen
         article.
         """
         return  self._cited_by_facebook_walls_count 
@@ -499,7 +500,7 @@ class Article():
         return self._readers
 
     @property
-    def cohorts(self): #FIX maybe change so more clear
+    def cohorts(self):
         """
         Return a dictionary with the number of people mentioning this article
         who are members of the public (pub), practitioners (doc), research
@@ -515,12 +516,11 @@ class Article():
     @property
     def altmetric_details_url(self):
         return self._altmetric_details_url
-    
-    #Altmetric Score Images
+
     @property
     def altmetric_images(self):
         """
-        Return a dictionary of the altmetric score image in
+        Return a dictionary of the Altmetric score image in
         'small', 'medium', and 'large'.
         """
         return self._altmetric_images
