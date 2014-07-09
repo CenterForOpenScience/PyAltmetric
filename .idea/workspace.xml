@@ -6,7 +6,9 @@
       <change type="DELETED" beforePath="$PROJECT_DIR$/full.json" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/test_altmetric.py" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/test_article.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/altmetric_library.py" afterPath="$PROJECT_DIR$/altmetric_library.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/requirements.txt" afterPath="$PROJECT_DIR$/requirements.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/test_altmetric.py" afterPath="$PROJECT_DIR$/tests/test_altmetric.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/test_article.py" afterPath="$PROJECT_DIR$/tests/test_article.py" />
     </list>
     <ignored path="altmetric-python-library.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -22,8 +24,8 @@
     <SUITE FILE_PATH="coverage/altmetric-python-library$Unittest_TestArticle_test_from_file_empty.coverage" NAME="Unittest TestArticle.test_from_file_empty Coverage Results" MODIFIED="1404911372826" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/altmetric-python-library$Unittests_in_TestArticle__1_.coverage" NAME="Unittests in TestArticle (1) Coverage Results" MODIFIED="1404910699468" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/altmetric-python-library$Unittest_TestArticle_test__convert_to_utc_average.coverage" NAME="Unittest TestArticle.test__convert_to_utc_average Coverage Results" MODIFIED="1404850374492" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/altmetric-python-library$Tests.coverage" NAME="Tests Coverage Results" MODIFIED="1404911473582" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
-    <SUITE FILE_PATH="coverage/altmetric-python-library$Unittest_TestArticle_test__parse_raw_empty.coverage" NAME="Unittest TestArticle.test__parse_raw_empty Coverage Results" MODIFIED="1404829058693" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/altmetric-python-library$Tests.coverage" NAME="Tests Coverage Results" MODIFIED="1404913409080" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/altmetric-python-library$Unittest_TestArticle_test__parse_raw_empty.coverage" NAME="Unittest TestArticle.test__parse_raw_empty Coverage Results" MODIFIED="1404913404063" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/altmetric-python-library$Unittest_TestArticle_test__parse_score_history.coverage" NAME="Unittest TestArticle.test__parse_score_history Coverage Results" MODIFIED="1404832370535" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/altmetric-python-library$Unittest_TestArticle_test_from_json_file_correct.coverage" NAME="Unittest TestArticle.test_from_json_file_correct Coverage Results" MODIFIED="1404910797398" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/altmetric-python-library$Unittest_TestArticle_test__parse_score_context_empty.coverage" NAME="Unittest TestArticle.test__parse_score_context_empty Coverage Results" MODIFIED="1404833398740" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -63,14 +65,14 @@
     <favorites_list name="altmetric-python-library" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.36028823">
+    <splitter split-orientation="horizontal" split-proportion="0.44355485">
       <split-first>
         <leaf>
           <file leaf-file-name="altmetric_library.py" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/altmetric_library.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-13.192307" vertical-offset="2267" max-vertical-offset="7980">
-                  <caret line="174" column="34" selection-start-line="174" selection-start-column="34" selection-end-line="174" selection-end-column="34" />
+                <state vertical-scroll-proportion="-13.192307" vertical-offset="3377" max-vertical-offset="7980">
+                  <caret line="248" column="30" selection-start-line="248" selection-start-column="24" selection-end-line="248" selection-end-column="30" />
                   <folding>
                     <element signature="e#287#302#0" expanded="true" />
                   </folding>
@@ -81,8 +83,8 @@
           <file leaf-file-name="test_altmetric.py" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/tests/test_altmetric.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-13.192307" vertical-offset="47" max-vertical-offset="1320">
-                  <caret line="26" column="41" selection-start-line="26" selection-start-column="36" selection-end-line="26" selection-end-column="41" />
+                <state vertical-scroll-proportion="-1.7307693" vertical-offset="0" max-vertical-offset="1335">
+                  <caret line="3" column="21" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
                   <folding>
                     <element signature="e#0#29#0" expanded="true" />
                   </folding>
@@ -93,8 +95,8 @@
           <file leaf-file-name="test_article.py" pinned="false" current="true" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/tests/test_article.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="3.0917692" vertical-offset="530" max-vertical-offset="5184">
-                  <caret line="211" column="42" selection-start-line="211" selection-start-column="42" selection-end-line="211" selection-end-column="42" />
+                <state vertical-scroll-proportion="-3.4345295" vertical-offset="4405" max-vertical-offset="5436">
+                  <caret line="48" column="48" selection-start-line="48" selection-start-column="48" selection-end-line="48" selection-end-column="48" />
                   <folding>
                     <element signature="e#0#29#0" expanded="true" />
                   </folding>
@@ -109,7 +111,7 @@
           <file leaf-file-name="altmetric_library.py" pinned="false" current="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/altmetric_library.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.43632773" vertical-offset="2183" max-vertical-offset="7980">
+                <state vertical-scroll-proportion="2.2428432" vertical-offset="353" max-vertical-offset="7980">
                   <caret line="175" column="30" selection-start-line="175" selection-start-column="30" selection-end-line="175" selection-end-column="30" />
                   <folding>
                     <element signature="e#287#302#0" expanded="true" />
@@ -138,9 +140,9 @@
         <option value="$PROJECT_DIR$/full.json" />
         <option value="$PROJECT_DIR$/test_altmetric.py" />
         <option value="$PROJECT_DIR$/test_article.py" />
-        <option value="$PROJECT_DIR$/tests/test_altmetric.py" />
         <option value="$PROJECT_DIR$/altmetric_library.py" />
         <option value="$PROJECT_DIR$/tests/empty.json" />
+        <option value="$PROJECT_DIR$/tests/test_altmetric.py" />
         <option value="$PROJECT_DIR$/tests/test_article.py" />
       </list>
     </option>
@@ -247,31 +249,6 @@
       <ConfigurationWrapper RunnerId="PythonRunner" />
       <method />
     </configuration>
-    <configuration default="false" name="Unittest TestArticle.test_from_json_file_empty" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="$USER_HOME$/.virtualenvs/altmetric/bin/python" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="altmetric-python-library" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tests/test_article.py" />
-      <option name="CLASS_NAME" value="TestArticle" />
-      <option name="METHOD_NAME" value="test_from_json_file_empty" />
-      <option name="FOLDER_NAME" value="$PROJECT_DIR$/tests" />
-      <option name="TEST_TYPE" value="TEST_METHOD" />
-      <option name="PATTERN" value="" />
-      <option name="USE_PATTERN" value="false" />
-      <option name="PUREUNITTEST" value="true" />
-      <option name="PARAMS" value="" />
-      <option name="USE_PARAM" value="false" />
-      <RunnerSettings RunnerId="PythonRunner" />
-      <ConfigurationWrapper RunnerId="PythonRunner" />
-      <method />
-    </configuration>
     <configuration default="false" name="Unittest TestArticle.test_from_json_file_correct" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -336,6 +313,31 @@
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tests/test_article.py" />
       <option name="CLASS_NAME" value="TestArticle" />
       <option name="METHOD_NAME" value="test_from_file_empty" />
+      <option name="FOLDER_NAME" value="$PROJECT_DIR$/tests" />
+      <option name="TEST_TYPE" value="TEST_METHOD" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PUREUNITTEST" value="true" />
+      <option name="PARAMS" value="" />
+      <option name="USE_PARAM" value="false" />
+      <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Unittest TestArticle.test__parse_raw_empty" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="$USER_HOME$/.virtualenvs/altmetric/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="altmetric-python-library" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tests/test_article.py" />
+      <option name="CLASS_NAME" value="TestArticle" />
+      <option name="METHOD_NAME" value="test__parse_raw_empty" />
       <option name="FOLDER_NAME" value="$PROJECT_DIR$/tests" />
       <option name="TEST_TYPE" value="TEST_METHOD" />
       <option name="PATTERN" value="" />
@@ -527,18 +529,18 @@
     <list size="6">
       <item index="0" class="java.lang.String" itemvalue="Python tests.Tests" />
       <item index="1" class="java.lang.String" itemvalue="Python tests.Unittests in TestArticle (1)" />
-      <item index="2" class="java.lang.String" itemvalue="Python tests.Unittest TestArticle.test_from_json_file_empty" />
-      <item index="3" class="java.lang.String" itemvalue="Python tests.Unittest TestArticle.test_from_json_file_correct" />
-      <item index="4" class="java.lang.String" itemvalue="Python tests.Unittest TestArticle.test_from_file_correct" />
-      <item index="5" class="java.lang.String" itemvalue="Python tests.Unittest TestArticle.test_from_file_empty" />
+      <item index="2" class="java.lang.String" itemvalue="Python tests.Unittest TestArticle.test_from_json_file_correct" />
+      <item index="3" class="java.lang.String" itemvalue="Python tests.Unittest TestArticle.test_from_file_correct" />
+      <item index="4" class="java.lang.String" itemvalue="Python tests.Unittest TestArticle.test_from_file_empty" />
+      <item index="5" class="java.lang.String" itemvalue="Python tests.Unittest TestArticle.test__parse_raw_empty" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python tests.Unittest TestArticle.test_from_file_empty" />
-        <item index="1" class="java.lang.String" itemvalue="Python tests.Unittest TestArticle.test_from_file_correct" />
-        <item index="2" class="java.lang.String" itemvalue="Python tests.Unittest TestArticle.test_from_json_file_correct" />
-        <item index="3" class="java.lang.String" itemvalue="Python tests.Unittests in TestArticle (1)" />
-        <item index="4" class="java.lang.String" itemvalue="Python tests.Unittest TestArticle.test_from_json_file_empty" />
+        <item index="0" class="java.lang.String" itemvalue="Python tests.Unittest TestArticle.test__parse_raw_empty" />
+        <item index="1" class="java.lang.String" itemvalue="Python tests.Unittest TestArticle.test_from_file_empty" />
+        <item index="2" class="java.lang.String" itemvalue="Python tests.Unittest TestArticle.test_from_file_correct" />
+        <item index="3" class="java.lang.String" itemvalue="Python tests.Unittest TestArticle.test_from_json_file_correct" />
+        <item index="4" class="java.lang.String" itemvalue="Python tests.Unittests in TestArticle (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -570,7 +572,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.0" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1576087" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1576087" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -658,16 +660,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_altmetric.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.192307" vertical-offset="47" max-vertical-offset="1320">
-          <caret line="26" column="41" selection-start-line="26" selection-start-column="36" selection-end-line="26" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#29#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/empty.json">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1033">
@@ -678,18 +670,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/altmetric_library.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.192307" vertical-offset="2267" max-vertical-offset="7980">
-          <caret line="174" column="34" selection-start-line="174" selection-start-column="34" selection-end-line="174" selection-end-column="34" />
+        <state vertical-scroll-proportion="-13.192307" vertical-offset="3377" max-vertical-offset="7980">
+          <caret line="248" column="30" selection-start-line="248" selection-start-column="24" selection-end-line="248" selection-end-column="30" />
           <folding>
             <element signature="e#287#302#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_altmetric.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.7307693" vertical-offset="0" max-vertical-offset="1335">
+          <caret line="3" column="21" selection-start-line="3" selection-start-column="21" selection-end-line="3" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_article.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="3.0917692" vertical-offset="530" max-vertical-offset="5184">
-          <caret line="211" column="42" selection-start-line="211" selection-start-column="42" selection-end-line="211" selection-end-column="42" />
+        <state vertical-scroll-proportion="-3.4345295" vertical-offset="4405" max-vertical-offset="5436">
+          <caret line="48" column="48" selection-start-line="48" selection-start-column="48" selection-end-line="48" selection-end-column="48" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
           </folding>

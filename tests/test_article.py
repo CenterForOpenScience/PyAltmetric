@@ -2,6 +2,7 @@ from unittest import TestCase
 from altmetric_library import *
 import json
 import datetime
+from mock import Mock
 
 __author__ = 'Lauren Revere'
 
@@ -21,13 +22,17 @@ class TestArticle(TestCase):
         self.assertFalse(self.art.abstract_source)
         self.assertFalse(self.art.journal)
         self.assertFalse(self.art.subjects)
+        self.assertIsInstance(self.art.subjects, list)
         self.assertFalse(self.art.added_on)
         self.assertFalse(self.art.published_on)
         self.assertFalse(self.art.url)
         self.assertFalse(self.art.is_open_access)
         self.assertFalse(self.art.scopus_subjects)
+        self.assertIsInstance(self.art.scopus_subjects, list)
         self.assertFalse(self.art.publisher_subjects)
+        self.assertIsInstance(self.art.publisher_subjects, list)
         self.assertFalse(self.art.taglines)
+        self.assertIsInstance(self.art.taglines, list)
 
         self.assertFalse(self.art.doi)
         self.assertFalse(self.art.nlmid)
@@ -36,10 +41,13 @@ class TestArticle(TestCase):
         self.assertFalse(self.art.arxiv_id)
         self.assertFalse(self.art.ads_id)
         self.assertFalse(self.art.issns)
+        self.assertIsInstance(self.art.issns, list)
 
         self.assertFalse(self.art.score)
         self.assertFalse(self.art.score_history)
+        self.assertIsInstance(self.art.score_history, dict)
         self.assertFalse(self.art.score_context)
+        self.assertIsInstance(self.art.score_context, dict)
         self.assertFalse(self.art.last_updated)
         self.assertFalse(self.art.schema)
         self.assertFalse(self.art.cited_by_facebook_walls_count)
@@ -58,8 +66,10 @@ class TestArticle(TestCase):
         self.assertFalse(self.art.cohorts)
         self.assertFalse(self.art.readers_count)
         self.assertFalse(self.art.readers)
+        self.assertIsInstance(self.art.readers, dict)
         self.assertFalse(self.art.altmetric_details_url)
         self.assertFalse(self.art.altmetric_images)
+        self.assertIsInstance(self.art.altmetric_images, dict)
 
 
     def test__parse_raw_average(self):
@@ -281,3 +291,7 @@ class TestArticle(TestCase):
 
     def test__parse_score_context_empty(self):
         self.assertEquals(self.art._parse_score_context({}),{})
+
+
+#Add mocking
+#Add checks for every value in article
