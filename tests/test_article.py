@@ -2,7 +2,6 @@ from unittest import TestCase
 from altmetric_library import *
 import json
 import datetime
-from mock import Mock
 
 __author__ = 'Lauren Revere'
 
