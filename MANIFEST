@@ -4,7 +4,4 @@ LICENSE.txt
 README.txt
 requirements.txt
 setup.py
-altmetriclibrary/__init__.py
-altmetriclibrary/altmetric_library.py
-altmetriclibrary/test/__init__.py
-altmetriclibrary/test/test_article.py
+altmetricwrapper/__init__.py

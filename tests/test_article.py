@@ -1,13 +1,11 @@
 from unittest import TestCase
-from altmetric_library import *
+from pyaltmetric import *
 import json
 import datetime
 
-__author__ = 'Lauren Revere'
-
 class TestArticle(TestCase):
     def setUp(self):
-        with open('full.json') as raw_json:
+        with open('tests/fixtures/full.json') as raw_json:
             raw_dict = json.load(raw_json)
             self.art = Article(raw_dict)
 
@@ -72,7 +70,7 @@ class TestArticle(TestCase):
 
 
     def test__parse_raw_average(self):
-        with open('average.json') as raw_json:
+        with open('tests/fixtures/average.json') as raw_json:
             raw_dict = json.load(raw_json)
             self.art._raw = raw_dict
             self.art._parse_raw()
@@ -218,25 +216,25 @@ class TestArticle(TestCase):
         self.assertTrue(self.art.altmetric_images)
 
     def test_from_json_file_empty(self):
-        self.assertRaises(AttributeError, Article.from_json_file,'empty.json')
+        self.assertRaises(AttributeError, Article.from_json_file,'tests/fixtures/empty.json')
 
     def test_from_json_file_wrong(self):
-        self.assertRaises(JSONParseException, Article.from_json_file,'wrong.txt')
+        self.assertRaises(JSONParseException, Article.from_json_file,'tests/fixtures/wrong.txt')
 
     def test_from_json_file_correct(self):
-        a = Article.from_json_file('full.json')
+        a = Article.from_json_file('tests/fixtures/full.json')
         self.assertIsInstance(a, Article)
 
     def test_from_file_empty(self):
-        with open('empty.json') as raw_json:
+        with open('tests/fixtures/empty.json') as raw_json:
             self.assertRaises(AttributeError, Article.from_json,raw_json)
 
     def test_from_file_wrong(self):
-        with open('wrong.txt') as raw_json:
+        with open('tests/fixtures/wrong.txt') as raw_json:
             self.assertRaises(JSONParseException, Article.from_json, raw_json)
 
     def test_from_file_correct(self):
-        with open('full.json') as raw_json:
+        with open('tests/fixtures/full.json') as raw_json:
             a = Article.from_json(raw_json)
             self.assertIsInstance(a, Article)
 
