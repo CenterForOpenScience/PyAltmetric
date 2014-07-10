@@ -15,9 +15,6 @@ import datetime
 import warnings
 import json
 
-reload(sys)
-sys.setdefaultencoding('utf-8')
-
 class AltmetricException(Exception):
     """Base class for any altmetric_library error."""
     pass
@@ -40,6 +37,11 @@ class AltmetricHTTPException(AltmetricException):
         super(AltmetricHTTPException, self).__init__(
             response_codes.get(status_code, status_code)
         )
+
+class IncorrectInput(AltmetricException):
+    """Informing the user that their query is incorrect."""
+    def __init__(self, msg):
+        super(IncorrectInput, self).__init__(msg)
 
 class Altmetric(object):
     def __init__(self, api_key = None, api_version = 'v1'):
@@ -86,7 +88,7 @@ class Altmetric(object):
         doi_prefix = None, nlmid = None, subjects = None, cited_in = None):
 
         """
-        Returns articles with mentions within a certain timeframe keyword
+        Return articles with mentions within a certain timeframe keyword
         arguments can further limit the search.
 
         :param timeframe: Argument for past x days/months/years. In format:
@@ -100,8 +102,10 @@ class Altmetric(object):
         :param cited_in: Options of facebook, blogs, linkedin, video,
             pinterest, gplus,twitter, reddit, news, f1000, rh, qna,
             forum, peerreview.
-        :return:
         """
+
+        timeframe = self._check_timeframe(timeframe)
+
         while(1):
             raw_json = self._get_altmetrics('citations', timeframe,
                 page = page, num_results = num_results,
@@ -137,6 +141,21 @@ class Altmetric(object):
             return Article(json)
         except AttributeError:
             return None
+
+    def _check_timeframe(self, timeframe):
+        if len(timeframe) > 2:
+            if timeframe == 'all time':
+                    timeframe = 'at'
+            else:
+                    timeframe = timeframe[0]+timeframe[2]
+
+        if timeframe not in [
+        'at','1d','2d','3d','4d','5d','6d','1w','1m','3m','6m','1y']:
+
+            raise IncorrectInput("Invalid timeframe entered.")
+
+        return timeframe
+
 
     @property
     def api_version(self):
