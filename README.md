@@ -45,13 +45,15 @@ First you need to import article:
 
 Then you can simply create atricles. There are three ways to do so.
 
-1. Using supplying a properly constructed dictionary stright into the
-        constructor:
+1. Using supplying a properly constructed dictionary stright into the constructor:
+        
         article2 = Article(json_dict)
-2. Supplying the filename of a properly formatted json and using the
-        class method from_json_file:
+        
+2. Supplying the filename of a properly formatted json and using the class method from_json_file:
+       
         article3 = Article.from_json_file(file)
-3. Supplying an alreay open file of properly formatted json and using the
-        class method from_json_file:
+        
+3. Supplying an alreay open file of properly formatted json and using the class method from_json_file:
+        
         article3 = Article.from_json_file("filename.json")
 
