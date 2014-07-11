@@ -54,3 +54,5 @@ docs/_build/
 
 #Altmetric API Key
 altmetric_api_key.txt
+
+.idea
