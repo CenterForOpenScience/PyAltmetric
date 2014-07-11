@@ -56,3 +56,4 @@ docs/_build/
 altmetric_api_key.txt
 
 .idea
+.DS_Store
