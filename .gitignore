@@ -56,5 +56,5 @@ docs/_build/
 altmetric_api_key.txt
 
 #PyCharm Configs
-idea/
+.idea/
 .DS_Store
