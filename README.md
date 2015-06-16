@@ -34,18 +34,18 @@ mentions within a given time period (past 3 days, past month, ect):
 
     articles = altmetric_object.articles_from_timeframe("1 day")
 
-It returns an article gerator which can easily be iterated through.
+It returns an article gerator that is easily iterable.
 
-If you already have a json from the Altmetric API you can create an
-article directly.
+If you already have a json from the Altmetric API you can create
+articles directly.
 
 First you need to import article:
 
     from pyaltmetric import Article
 
-Then you can simply create atricles. There are three ways to do so.
+Then you can simply create articles. There are three ways to do so.
 
-1. Using supplying a properly constructed dictionary stright into the constructor:
+1. Supplying a properly constructed dictionary stright into the constructor:
         
         article2 = Article(json_dict)
         
