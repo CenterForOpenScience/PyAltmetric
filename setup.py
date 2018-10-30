@@ -6,9 +6,8 @@ setup(
     author='Lauren Revere',
     author_email='lauren.revere@gmail.com',
     packages=['pyaltmetric'],
-    url='http://pypi.python.org/pypi/PyAltmetric/',
     license='LICENSE.txt',
     description='A python wrapper for the Altmetric API.',
     long_description=open('README.txt').read(),
-    install_requires=['requests==2.3.0'],
+    install_requires=['requests>=2.20.0'],
 )
