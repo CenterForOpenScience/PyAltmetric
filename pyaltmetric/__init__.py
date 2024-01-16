@@ -52,7 +52,7 @@ class Altmetric(object):
             warnings.warn("This wrapper has only been tested with API v1."
                           "If you try another version it will probably break.")
 
-        self._api_url = "http://api.altmetric.com/%s/" % self.api_version
+        self._api_url = "https://api.altmetric.com/%s/" % self.api_version
 
         self._api_key = {}
         if api_key:
